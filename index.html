@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,17 +14,14 @@
             margin: 0;
             background-color: #f0f0f0;
         }
-
         .container {
             text-align: center;
         }
-
         button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
         }
-
         #result {
             margin-top: 20px;
             font-size: 18px;
@@ -33,34 +29,41 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
+        <h1>Check if Instagram is Installed</h1>
         <button onclick="checkApp()">Check Instagram</button>
         <p id="result"></p>
     </div>
     <script>
         function checkApp() {
             const resultElement = document.getElementById('result');
-            const instagramUrl = 'insgram://';
+            const appSchemeUrl = 'instagram://'; // Instagram's custom URL scheme
             const timeout = 2000; // Time in milliseconds to wait for the result
 
-            // Create an invisible iframe to attempt to open the URL
+            // Create an invisible iframe to attempt to open the app
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
-            iframe.src = instagramUrl;
+            iframe.src = appSchemeUrl;
             document.body.appendChild(iframe);
 
-            // Timeout to check if the app is installed
-            setTimeout(() => {
-                const isAppInstalled = document.hidden || document.visibilityState === 'hidden';
+            let appOpened = false;
 
-                if (isAppInstalled) {
-                    resultElement.textContent = 'Instagram is not installed.';
-                    resultElement.style.color = 'red';
-                } else {
+            // Listen for visibility change to detect if the app was opened
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'hidden') {
+                    appOpened = true;
+                }
+            });
+
+            // Set a timeout to check if the app was opened
+            setTimeout(() => {
+                if (appOpened) {
                     resultElement.textContent = 'Instagram is installed.';
                     resultElement.style.color = 'green';
+                } else {
+                    resultElement.textContent = 'Instagram is not installed.';
+                    resultElement.style.color = 'red';
                 }
 
                 // Clean up iframe
@@ -69,5 +72,4 @@
         }
     </script>
 </body>
-
 </html>
