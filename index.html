@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check App Installation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <button onclick="checkApp()">Check Instagram</button>
+        <p id="result"></p>
+    </div>
+    <script>
+        function checkApp() {
+            const resultElement = document.getElementById('result');
+            const instagramUrl = 'instagram://';
+            const timeout = 2000; // Time in milliseconds to wait for the result
+
+            // Create an invisible iframe to attempt to open the URL
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = instagramUrl;
+            document.body.appendChild(iframe);
+
+            // Timeout to check if the app is installed
+            setTimeout(() => {
+                const isAppInstalled = document.hidden || document.visibilityState === 'hidden';
+
+                if (isAppInstalled) {
+                    resultElement.textContent = 'Instagram is not installed.';
+                    resultElement.style.color = 'red';
+                } else {
+                    resultElement.textContent = 'Instagram is installed.';
+                    resultElement.style.color = 'green';
+                }
+
+                // Clean up iframe
+                document.body.removeChild(iframe);
+            }, timeout);
+        }
+    </script>
+</body>
+
+</html>
