@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ii<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,10 +38,10 @@
     <script>
         function checkApp() {
             const resultElement = document.getElementById('result');
-            const appSchemeUrl = 'instagram://'; // Instagram's custom URL scheme
-            const timeout = 2000; // Time in milliseconds to wait for the result
+            const appSchemeUrl = 'instagram://';
+            const timeout = 2000; 
 
-            // Create an invisible iframe to attempt to open the app
+  
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.src = appSchemeUrl;
@@ -49,14 +49,13 @@
 
             let appOpened = false;
 
-            // Listen for visibility change to detect if the app was opened
             document.addEventListener('visibilitychange', function() {
                 if (document.visibilityState === 'hidden') {
                     appOpened = true;
                 }
             });
 
-            // Set a timeout to check if the app was opened
+
             setTimeout(() => {
                 if (appOpened) {
                     resultElement.textContent = 'Instagram is installed.';
@@ -65,8 +64,6 @@
                     resultElement.textContent = 'Instagram is not installed.';
                     resultElement.style.color = 'red';
                 }
-
-                // Clean up iframe
                 document.body.removeChild(iframe);
             }, timeout);
         }
